@@ -1,0 +1,28 @@
+[package]
+name = "mock_writer"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "mock_writer"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+custom-heap = []
+custom-panic = []
+anchor-debug = []
+test-oracle = []
+
+[dependencies]
+anchor-lang = { version = "0.31.1", features = ["init-if-needed", "idl-build"] }
+anchor-spl = { version = "0.31.1", features = ["token_2022", "idl-build"] }
+pyth-sdk-solana = { version = "0.10.6" }
+bytemuck = "1.13.1"
+

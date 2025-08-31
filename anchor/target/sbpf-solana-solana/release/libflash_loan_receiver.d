@@ -1,0 +1,1 @@
+/Users/chenwei/git_projects/solana_projects/push_git/secure-lending-protocol/anchor/target/sbpf-solana-solana/release/libflash_loan_receiver.rlib: /Users/chenwei/git_projects/solana_projects/push_git/secure-lending-protocol/anchor/programs/flash_loan_receiver/src/lib.rs

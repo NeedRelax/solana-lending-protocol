@@ -1,0 +1,64 @@
+{
+  "address": "Agxw43dYHrUcCiJPAeTKe4QK4qfgQPoAPTWrwkQepiw7",
+  "metadata": {
+    "name": "flash_loan_receiver",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "executeOperation",
+      "discriminator": [
+        245,
+        135,
+        123,
+        214,
+        182,
+        74,
+        195,
+        199
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "docs": [
+            "We manually check `is_signer` in the instruction logic."
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_account",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "fee",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UserNotSigner",
+      "msg": "The user account must be a signer."
+    }
+  ]
+}

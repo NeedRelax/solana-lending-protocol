@@ -1,0 +1,2782 @@
+{
+  "address": "2XsQQ3t5uScXfiwxWGBLNXBSMwoMfEyw9Muc1LwcC7gH",
+  "metadata": {
+    "name": "lending_protocol",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "add_asset_pool",
+      "docs": [
+        "[Governance] Adds a new asset pool to the market."
+      ],
+      "discriminator": [
+        219,
+        121,
+        194,
+        180,
+        186,
+        22,
+        121,
+        206
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true
+        },
+        {
+          "name": "asset_pool",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "governance_authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        },
+        {
+          "name": "pyth_price_feed_account"
+        },
+        {
+          "name": "chainlink_price_feed_account",
+          "optional": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AssetPoolParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "approve_delegation",
+      "docs": [
+        "[User] Approves another account to borrow against their position."
+      ],
+      "discriminator": [
+        101,
+        244,
+        227,
+        116,
+        198,
+        137,
+        117,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "credit_delegation",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  100,
+                  105,
+                  116,
+                  95,
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "delegatee_account"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "delegatee_account"
+        },
+        {
+          "name": "asset_pool"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "borrow",
+      "docs": [
+        "[User] Borrows assets against their deposited collateral."
+      ],
+      "discriminator": [
+        228,
+        253,
+        131,
+        202,
+        207,
+        116,
+        89,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "user_asset_account",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "pyth_price_feed_account"
+        },
+        {
+          "name": "chainlink_price_feed_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "borrow_delegated",
+      "docs": [
+        "[Delegatee] Borrows using the credit line delegated to them."
+      ],
+      "discriminator": [
+        102,
+        111,
+        123,
+        56,
+        76,
+        129,
+        207,
+        85
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "owner_position",
+          "writable": true
+        },
+        {
+          "name": "owner"
+        },
+        {
+          "name": "credit_delegation",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  100,
+                  105,
+                  116,
+                  95,
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "delegatee"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delegatee",
+          "signer": true
+        },
+        {
+          "name": "delegatee_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "pyth_price_feed_account"
+        },
+        {
+          "name": "chainlink_price_feed_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "collect_protocol_fees",
+      "docs": [
+        "[Governance] Collects accrued protocol fees from an asset pool."
+      ],
+      "discriminator": [
+        22,
+        67,
+        23,
+        98,
+        150,
+        178,
+        70,
+        220
+      ],
+      "accounts": [
+        {
+          "name": "market_config"
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination_account",
+          "writable": true
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "governance_authority",
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_user_position",
+      "docs": [
+        "[User] Initializes a user's position account for a specific asset pool."
+      ],
+      "discriminator": [
+        6,
+        137,
+        127,
+        227,
+        135,
+        241,
+        14,
+        109
+      ],
+      "accounts": [
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "asset_pool"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "[User] Deposits assets into a pool to be used as collateral."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_asset_account",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "enable_withdraw_only_mode",
+      "docs": [
+        "[Governance] Sets the protocol to withdraw-only mode."
+      ],
+      "discriminator": [
+        242,
+        168,
+        252,
+        195,
+        96,
+        63,
+        80,
+        164
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "governance_authority",
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "execute_operations",
+      "docs": [
+        "[User] Executes a batch of operations in a single transaction."
+      ],
+      "discriminator": [
+        99,
+        191,
+        213,
+        196,
+        122,
+        40,
+        15,
+        249
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "user_asset_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "pyth_price_feed_account"
+        },
+        {
+          "name": "chainlink_price_feed_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "operations",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "Operation"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "flash_loan",
+      "docs": [
+        "[User/Bot] Executes a flash loan."
+      ],
+      "discriminator": [
+        239,
+        246,
+        59,
+        224,
+        139,
+        20,
+        175,
+        14
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination_account",
+          "writable": true
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "flash_loan_receiver_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "callback_ix_data",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "initialize_market_config",
+      "docs": [
+        "[Governance] Initializes the central market configuration."
+      ],
+      "discriminator": [
+        5,
+        94,
+        211,
+        203,
+        75,
+        239,
+        159,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "liquidate",
+      "docs": [
+        "[Liquidator] Liquidates an unhealthy position by repaying debt to seize collateral."
+      ],
+      "discriminator": [
+        223,
+        179,
+        226,
+        125,
+        48,
+        46,
+        39,
+        74
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collateral_pool",
+          "writable": true
+        },
+        {
+          "name": "loan_pool",
+          "writable": true
+        },
+        {
+          "name": "collateral_mint"
+        },
+        {
+          "name": "loan_mint"
+        },
+        {
+          "name": "borrower_collateral_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collateral_pool"
+              },
+              {
+                "kind": "account",
+                "path": "borrower"
+              }
+            ]
+          }
+        },
+        {
+          "name": "borrower_loan_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "loan_pool"
+              },
+              {
+                "kind": "account",
+                "path": "borrower"
+              }
+            ]
+          }
+        },
+        {
+          "name": "borrower"
+        },
+        {
+          "name": "liquidator",
+          "signer": true
+        },
+        {
+          "name": "liquidator_collateral_account",
+          "writable": true
+        },
+        {
+          "name": "liquidator_loan_account",
+          "writable": true
+        },
+        {
+          "name": "collateral_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collateral_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "loan_vault",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "collateral_price_feed_account"
+        },
+        {
+          "name": "collateral_chainlink_feed_account"
+        },
+        {
+          "name": "loan_price_feed_account"
+        },
+        {
+          "name": "loan_chainlink_feed_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_to_repay",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "pause_protocol",
+      "docs": [
+        "[Governance] Pauses the protocol, halting most user interactions."
+      ],
+      "discriminator": [
+        144,
+        95,
+        0,
+        107,
+        119,
+        39,
+        248,
+        141
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "governance_authority",
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "repay",
+      "docs": [
+        "[User] Repays a loan to the asset pool."
+      ],
+      "discriminator": [
+        234,
+        103,
+        67,
+        82,
+        208,
+        234,
+        219,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "user_asset_account",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "revoke_delegation",
+      "docs": [
+        "[User] Revokes an existing credit delegation."
+      ],
+      "discriminator": [
+        188,
+        92,
+        135,
+        67,
+        160,
+        181,
+        54,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "credit_delegation",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  100,
+                  105,
+                  116,
+                  95,
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "delegatee_account"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "credit_delegation"
+          ]
+        },
+        {
+          "name": "delegatee_account"
+        },
+        {
+          "name": "asset_pool"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "unpause_protocol",
+      "docs": [
+        "[Governance] Unpauses the protocol, resuming normal operations."
+      ],
+      "discriminator": [
+        183,
+        154,
+        5,
+        183,
+        105,
+        76,
+        87,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "governance_authority",
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_asset_pool",
+      "docs": [
+        "[Governance] Updates the parameters for an existing asset pool."
+      ],
+      "discriminator": [
+        171,
+        90,
+        126,
+        53,
+        250,
+        94,
+        243,
+        130
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "governance_authority",
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AssetPoolParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_governance_authority",
+      "docs": [
+        "[Governance] Transfers governance authority to a new public key."
+      ],
+      "discriminator": [
+        11,
+        185,
+        227,
+        55,
+        39,
+        32,
+        168,
+        14
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "governance_authority",
+          "signer": true,
+          "relations": [
+            "market_config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "new_authority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "docs": [
+        "[User] Withdraws collateral from a pool, subject to health checks."
+      ],
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "market_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_pool",
+          "writable": true
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "user_asset_account",
+          "writable": true
+        },
+        {
+          "name": "asset_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  115,
+                  115,
+                  101,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "asset_pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "pyth_price_feed_account"
+        },
+        {
+          "name": "chainlink_price_feed_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AssetPool",
+      "discriminator": [
+        81,
+        48,
+        2,
+        215,
+        147,
+        255,
+        152,
+        112
+      ]
+    },
+    {
+      "name": "CreditDelegation",
+      "discriminator": [
+        192,
+        108,
+        220,
+        35,
+        80,
+        56,
+        106,
+        35
+      ]
+    },
+    {
+      "name": "MarketConfig",
+      "discriminator": [
+        119,
+        255,
+        200,
+        88,
+        252,
+        82,
+        128,
+        24
+      ]
+    },
+    {
+      "name": "UserPosition",
+      "discriminator": [
+        251,
+        248,
+        209,
+        245,
+        83,
+        234,
+        17,
+        27
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AssetPoolAdded",
+      "discriminator": [
+        139,
+        26,
+        91,
+        19,
+        136,
+        43,
+        84,
+        36
+      ]
+    },
+    {
+      "name": "AssetPoolUpdated",
+      "discriminator": [
+        89,
+        91,
+        229,
+        75,
+        24,
+        118,
+        18,
+        147
+      ]
+    },
+    {
+      "name": "Borrowed",
+      "discriminator": [
+        225,
+        182,
+        241,
+        78,
+        34,
+        145,
+        253,
+        230
+      ]
+    },
+    {
+      "name": "BorrowedDelegated",
+      "discriminator": [
+        237,
+        64,
+        61,
+        124,
+        173,
+        56,
+        5,
+        116
+      ]
+    },
+    {
+      "name": "DelegationUpdated",
+      "discriminator": [
+        195,
+        70,
+        246,
+        184,
+        110,
+        77,
+        100,
+        4
+      ]
+    },
+    {
+      "name": "Deposited",
+      "discriminator": [
+        111,
+        141,
+        26,
+        45,
+        161,
+        35,
+        100,
+        57
+      ]
+    },
+    {
+      "name": "FlashLoaned",
+      "discriminator": [
+        217,
+        243,
+        240,
+        231,
+        201,
+        56,
+        240,
+        50
+      ]
+    },
+    {
+      "name": "GovernanceAuthorityChanged",
+      "discriminator": [
+        92,
+        188,
+        188,
+        99,
+        166,
+        80,
+        99,
+        50
+      ]
+    },
+    {
+      "name": "Liquidation",
+      "discriminator": [
+        253,
+        18,
+        85,
+        107,
+        192,
+        175,
+        171,
+        172
+      ]
+    },
+    {
+      "name": "MarketConfigInitialized",
+      "discriminator": [
+        215,
+        170,
+        151,
+        136,
+        30,
+        87,
+        38,
+        101
+      ]
+    },
+    {
+      "name": "OperationsExecuted",
+      "discriminator": [
+        223,
+        153,
+        255,
+        194,
+        38,
+        61,
+        220,
+        152
+      ]
+    },
+    {
+      "name": "ProtocolFeesCollected",
+      "discriminator": [
+        165,
+        34,
+        125,
+        155,
+        15,
+        86,
+        99,
+        191
+      ]
+    },
+    {
+      "name": "ProtocolPaused",
+      "discriminator": [
+        35,
+        111,
+        245,
+        138,
+        237,
+        199,
+        79,
+        223
+      ]
+    },
+    {
+      "name": "ProtocolUnpaused",
+      "discriminator": [
+        248,
+        204,
+        112,
+        239,
+        72,
+        67,
+        127,
+        216
+      ]
+    },
+    {
+      "name": "ProtocolWithdrawOnlyModeEnabled",
+      "discriminator": [
+        74,
+        88,
+        180,
+        117,
+        77,
+        77,
+        207,
+        11
+      ]
+    },
+    {
+      "name": "Repaid",
+      "discriminator": [
+        38,
+        248,
+        231,
+        7,
+        150,
+        164,
+        172,
+        23
+      ]
+    },
+    {
+      "name": "Withdrawn",
+      "discriminator": [
+        20,
+        89,
+        223,
+        198,
+        194,
+        124,
+        219,
+        13
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "MathOverflow",
+      "msg": "Mathematical overflow during calculation."
+    },
+    {
+      "code": 6001,
+      "name": "InvalidPythAccount",
+      "msg": "Invalid Pyth account provided."
+    },
+    {
+      "code": 6002,
+      "name": "PythPriceTooOld",
+      "msg": "The Pyth price feed is too old."
+    },
+    {
+      "code": 6003,
+      "name": "PythConfidenceTooWide",
+      "msg": "The Pyth price confidence interval is too wide."
+    },
+    {
+      "code": 6004,
+      "name": "ChainlinkPriceTooOld",
+      "msg": "The Chainlink price feed is too old."
+    },
+    {
+      "code": 6005,
+      "name": "InvalidChainlinkPrice",
+      "msg": "Invalid Chainlink price (e.g., negative or zero)."
+    },
+    {
+      "code": 6006,
+      "name": "AllOraclesFailed",
+      "msg": "All available oracles failed to provide a valid price."
+    },
+    {
+      "code": 6007,
+      "name": "InvalidPythPrice",
+      "msg": "The Pyth price is invalid (e.g., negative or zero)."
+    },
+    {
+      "code": 6008,
+      "name": "InsufficientCollateral",
+      "msg": "Collateral value is insufficient for this operation."
+    },
+    {
+      "code": 6009,
+      "name": "InsufficientCollateralAmount",
+      "msg": "Not enough collateral deposited to withdraw this amount."
+    },
+    {
+      "code": 6010,
+      "name": "PositionHealthy",
+      "msg": "The position is healthy and cannot be liquidated."
+    },
+    {
+      "code": 6011,
+      "name": "PositionWouldBecomeUnhealthy",
+      "msg": "This operation would leave the position unhealthy."
+    },
+    {
+      "code": 6012,
+      "name": "InvalidOwner",
+      "msg": "The signer is not the owner of the user position account."
+    },
+    {
+      "code": 6013,
+      "name": "InsufficientCollateralForLiquidation",
+      "msg": "Not enough collateral in the position for the liquidation seizure."
+    },
+    {
+      "code": 6014,
+      "name": "ZeroAmount",
+      "msg": "The transaction amount cannot be zero."
+    },
+    {
+      "code": 6015,
+      "name": "MaxAssetsExceeded",
+      "msg": "The maximum number of asset pools has been reached."
+    },
+    {
+      "code": 6016,
+      "name": "InsufficientLiquidity",
+      "msg": "The asset pool has insufficient liquidity for this operation."
+    },
+    {
+      "code": 6017,
+      "name": "DelegationMismatch",
+      "msg": "The signer does not match the approved delegatee for this credit line."
+    },
+    {
+      "code": 6018,
+      "name": "DelegationExceeded",
+      "msg": "The requested borrow amount exceeds the delegated credit line."
+    },
+    {
+      "code": 6019,
+      "name": "InvalidOperation",
+      "msg": "The operation provided in the batch transaction is invalid."
+    },
+    {
+      "code": 6020,
+      "name": "DelegationIsActive",
+      "msg": "The delegation is currently in use and cannot be revoked."
+    },
+    {
+      "code": 6021,
+      "name": "FlashLoanNotAvailable",
+      "msg": "Flash loans are not enabled for this asset pool."
+    },
+    {
+      "code": 6022,
+      "name": "FlashLoanReentrancy",
+      "msg": "Flash loan callback cannot be the lending program itself."
+    },
+    {
+      "code": 6023,
+      "name": "FlashLoanRepaymentFailed",
+      "msg": "The flash loan was not fully repaid with the required fee."
+    },
+    {
+      "code": 6024,
+      "name": "CollateralMintMismatch",
+      "msg": "The provided collateral mint account does not match the one in the collateral pool."
+    },
+    {
+      "code": 6025,
+      "name": "LoanMintMismatch",
+      "msg": "The provided loan mint account does not match the one in the loan pool."
+    },
+    {
+      "code": 6026,
+      "name": "ProtocolPaused",
+      "msg": "The protocol is currently paused by governance."
+    },
+    {
+      "code": 6027,
+      "name": "ProtocolNotActive",
+      "msg": "The protocol is not active. No new positions or loans can be created."
+    },
+    {
+      "code": 6028,
+      "name": "CannotLiquidateSelf",
+      "msg": "A liquidator cannot liquidate their own position."
+    },
+    {
+      "code": 6029,
+      "name": "InvalidOracleAccount",
+      "msg": "The provided oracle account is not valid or recognized."
+    },
+    {
+      "code": 6030,
+      "name": "InvalidLtv",
+      "msg": "Loan-to-value cannot be greater than the liquidation threshold."
+    },
+    {
+      "code": 6031,
+      "name": "InvalidLiquidationThreshold",
+      "msg": "Liquidation threshold must be less than 100%."
+    },
+    {
+      "code": 6032,
+      "name": "InvalidOptimalUtilization",
+      "msg": "Optimal utilization must be less than 100%."
+    },
+    {
+      "code": 6033,
+      "name": "InvalidAssetVault",
+      "msg": "The provided asset vault account is invalid for this pool."
+    },
+    {
+      "code": 6034,
+      "name": "InvalidAssetPool",
+      "msg": "The provided asset Pool account is invalid for this pool."
+    },
+    {
+      "code": 6035,
+      "name": "InvalidAssetMint",
+      "msg": "The provided asset Mint account is invalid for this pool."
+    }
+  ],
+  "types": [
+    {
+      "name": "AssetPool",
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "asset_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "asset_vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "pyth_price_feed",
+            "type": "pubkey"
+          },
+          {
+            "name": "chainlink_price_feed",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_deposits",
+            "type": "u64"
+          },
+          {
+            "name": "total_loans",
+            "type": "u64"
+          },
+          {
+            "name": "accrued_protocol_fees",
+            "type": "u64"
+          },
+          {
+            "name": "last_interest_update_timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "loan_to_value_bps",
+            "type": "u64"
+          },
+          {
+            "name": "liquidation_threshold_bps",
+            "type": "u64"
+          },
+          {
+            "name": "base_borrow_rate_bps",
+            "type": "u128"
+          },
+          {
+            "name": "base_slope_bps",
+            "type": "u128"
+          },
+          {
+            "name": "optimal_utilization_bps",
+            "type": "u64"
+          },
+          {
+            "name": "kink_slope_bps",
+            "type": "u128"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "flash_loan_fee_bps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AssetPoolAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool_key",
+            "type": "pubkey"
+          },
+          {
+            "name": "asset_mint",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AssetPoolParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "loan_to_value_bps",
+            "type": "u64"
+          },
+          {
+            "name": "liquidation_threshold_bps",
+            "type": "u64"
+          },
+          {
+            "name": "base_borrow_rate_bps",
+            "type": "u128"
+          },
+          {
+            "name": "base_slope_bps",
+            "type": "u128"
+          },
+          {
+            "name": "optimal_utilization_bps",
+            "type": "u64"
+          },
+          {
+            "name": "kink_slope_bps",
+            "type": "u128"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "flash_loan_fee_bps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AssetPoolUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool_key",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Borrowed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BorrowedDelegated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegatee",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreditDelegation",
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegatee",
+            "type": "pubkey"
+          },
+          {
+            "name": "asset_pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "initial_delegated_amount",
+            "type": "u64"
+          },
+          {
+            "name": "delegated_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DelegationUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegatee",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegated_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FlashLoaned",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "receiver",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GovernanceAuthorityChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "old_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Liquidation",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collateral_pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "loan_pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "liquidator",
+            "type": "pubkey"
+          },
+          {
+            "name": "borrower",
+            "type": "pubkey"
+          },
+          {
+            "name": "repay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "seized_collateral_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketConfig",
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "governance_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "status",
+            "docs": [
+              "Protocol status: 0=Active, 1=Paused, 2=WithdrawOnly"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "pool_count",
+            "type": "u16"
+          },
+          {
+            "name": "pools",
+            "type": {
+              "array": [
+                "pubkey",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketConfigInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_governance_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Operation",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Deposit",
+            "fields": [
+              {
+                "name": "amount",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "Withdraw",
+            "fields": [
+              {
+                "name": "amount",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "Borrow",
+            "fields": [
+              {
+                "name": "amount",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "Repay",
+            "fields": [
+              {
+                "name": "amount",
+                "type": "u64"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "OperationsExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolFeesCollected",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolPaused",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "ProtocolUnpaused",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "ProtocolWithdrawOnlyModeEnabled",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "Repaid",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserPosition",
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "collateral_amount",
+            "type": "u64"
+          },
+          {
+            "name": "loan_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Withdrawn",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}

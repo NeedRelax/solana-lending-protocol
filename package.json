@@ -1,5 +1,5 @@
 {
-  "name": "secure-lending-protocol",
+  "name": "lending-protocol",
   "scripts": {
     "anchor": "cd anchor && anchor",
     "anchor-build": "cd anchor && anchor build",
@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "init": "ts-node anchor/scripts/initialize.ts"
   },
   "description": "Next.js, Tailwind, @solana/web3.js, Wallet Adapter, Anchor Counter program",
   "keywords": [
@@ -27,10 +28,13 @@
   "private": true,
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1",
+    "@pythnetwork/client": "^2.22.1",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "@solana/kit": "^3.0.0",
+    "@solana/programs": "^3.0.0",
     "@solana/spl-token": "0.4.13",
     "@solana/wallet-adapter-base": "0.9.27",
     "@solana/wallet-adapter-react": "0.15.39",
@@ -63,6 +67,7 @@
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.12",
     "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   }
 }

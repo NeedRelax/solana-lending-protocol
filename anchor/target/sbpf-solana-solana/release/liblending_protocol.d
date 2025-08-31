@@ -1,0 +1,1 @@
+/Users/chenwei/git_projects/solana_projects/push_git/secure-lending-protocol/anchor/target/sbpf-solana-solana/release/liblending_protocol.rlib: /Users/chenwei/git_projects/solana_projects/push_git/secure-lending-protocol/anchor/programs/lending_protocol/src/lib.rs

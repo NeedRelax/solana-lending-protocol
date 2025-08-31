@@ -1,0 +1,1 @@
+/Users/chenwei/git_projects/solana_projects/push_git/secure-lending-protocol/anchor/target/sbpf-solana-solana/release/libmock_writer.rlib: /Users/chenwei/git_projects/solana_projects/push_git/secure-lending-protocol/anchor/programs/mock_writer/src/lib.rs

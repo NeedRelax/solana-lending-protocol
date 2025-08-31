@@ -6,7 +6,9 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-counter = "FqzkXZdwYjurnUKetJCAvaUw5WAqbwzU6gZEwydeEfqS"
+flash_loan_receiver = "Agxw43dYHrUcCiJPAeTKe4QK4qfgQPoAPTWrwkQepiw7"
+lending_protocol = "2XsQQ3t5uScXfiwxWGBLNXBSMwoMfEyw9Muc1LwcC7gH"
+mock_writer = "BN6SmdB35pe6CF8dA7AehZMB3umBGPQK46TcyB9PNBLc"
 
 [registry]
 url = "https://api.apr.dev"
@@ -15,5 +17,14 @@ url = "https://api.apr.dev"
 cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
+[workspace]
+members = ["programs/lending_protocol", "programs/flash_loan_receiver", "programs/mock_writer"]
+
 [scripts]
-test = "../node_modules/.bin/jest --preset ts-jest"
+#test = "../node_modules/.bin/jest --preset ts-jest"
+test = "anchor build -p lending_protocol -- --features test-oracle && anchor build -p flash_loan_receiver && anchor build -p mock_writer && ../node_modules/.bin/jest --preset ts-jest --runInBand"
+initialize = "../node_modules/.bin/ts-node scripts/initialize.ts"
+[test]
+startup_wait = 5000
+shutdown_wait = 2000
+upgradeable = false
